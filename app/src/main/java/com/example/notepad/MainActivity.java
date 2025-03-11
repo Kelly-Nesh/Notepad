@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
         noteEditText = findViewById(R.id.noteEditText);
         noteStorage = new NoteStorage(this);
 
-        noteStorage.loadNote();
+        String note = noteStorage.loadNote();
+        noteEditText.setText(note);
     }
 
     @Override
