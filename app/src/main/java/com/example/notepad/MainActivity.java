@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_NAME = "note.txt";
     private EditText noteEditText;
     private Button saveButton;
+    private Button clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         noteEditText = findViewById(R.id.noteEditText);
         saveButton = findViewById(R.id.saveButton);
+        clearButton = findViewById(R.id.clearButton);
 
         loadNote();
 
@@ -39,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Cannot save empty note", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                noteEditText.setText("");
             }
         });
     }
