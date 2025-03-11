@@ -2,11 +2,12 @@ package com.example.notepad;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -17,8 +18,6 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_NAME = "note.txt";
     private EditText noteEditText;
-    private Button saveButton;
-    private Button clearButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,32 +25,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         noteEditText = findViewById(R.id.noteEditText);
-        saveButton = findViewById(R.id.saveButton);
-        clearButton = findViewById(R.id.clearButton);
 
         loadNote();
+    }
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_save) {
                 String note = noteEditText.getText().toString();
-                if (!note.isEmpty()) {
-                    saveNote(note);
-                    Toast.makeText(MainActivity.this, "Note saved!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Cannot save empty note", Toast.LENGTH_SHORT).show();
-                }
+            saveNote(note);
+            return true;
+        } else if (id == R.id.action_clear) {
+            noteEditText.setText("");
+            return true;
             }
-        });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                noteEditText.setText("");
-            }
-        });
+        return super.onOptionsItemSelected(item);
     }
 
     private void saveNote(String note) {
+        if (note.isEmpty()) {
+            Toast.makeText(this, "Cannot save empty note", Toast.LENGTH_SHORT).show();
+            return;
+        }
         File file = new File(getFilesDir(), FILE_NAME);
         FileOutputStream fos = null;
 
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+            Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show();
         } else {
             noteEditText.setText("");
         }
