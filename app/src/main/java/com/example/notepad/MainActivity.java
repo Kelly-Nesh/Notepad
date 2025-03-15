@@ -17,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
     private EditText noteEditText;
     private NoteStorage noteStorage;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         noteEditText = findViewById(R.id.noteEditText);
         noteStorage = new NoteStorage(this);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String note = noteStorage.loadNote();
-        noteEditText.setText(note);
+        loadNote();
     }
 
     @Override
@@ -45,18 +43,22 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_save) {
             String note = noteEditText.getText().toString();
-            boolean saved = noteStorage.saveNote(note);
-            if (!saved) {
-                noteEditText.setText("");
-            }
+            noteStorage.saveNote(note);
             return true;
         } else if (id == R.id.action_clear) {
             noteEditText.setText("");
             return true;
         } else if (id == R.id.action_paste) {
             pasteFromClipboard();
+        } else if (id == R.id.action_delete) {
+            deleteNote();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadNote() {
+        String note = noteStorage.loadNote();
+        noteEditText.setText(note);
     }
 
     private void pasteFromClipboard() {
@@ -72,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Clipboard is empty", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void deleteNote() {
+        noteEditText.setText("");
+        noteStorage.deleteNote();
+        Toast.makeText(this, "Note deleted!", Toast.LENGTH_SHORT).show();
     }
 
 }

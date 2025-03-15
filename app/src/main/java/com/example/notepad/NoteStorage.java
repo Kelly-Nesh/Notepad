@@ -16,38 +16,50 @@ public class NoteStorage {
         this.context = context;
     }
 
-    public boolean saveNote(String note) {
+    public void saveNote(String note) {
         if (note.isEmpty()) {
             Toast.makeText(context, "Cannot save empty note", Toast.LENGTH_SHORT).show();
-            return false;
         }
         File file = new File(context.getFilesDir(), FILE_NAME);
         FileOutputStream fos = null;
+        boolean fullySaved = false;
 
-        if (file.exists()) {
+        if (!file.exists()) {
             try {
-                fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-                fos.write(note.getBytes());
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error saving note", Toast.LENGTH_SHORT).show();
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                Toast.makeText(context, "Error creating file", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        try {
+            fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(note.getBytes());
+            fullySaved = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Error saving note", Toast.LENGTH_SHORT).show();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                    if (fullySaved) {
+                        Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-            Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
-            return true;
-        } else {
-            return false;
         }
     }
 
     public String loadNote() {
+        File file = new File(context.getFilesDir(), FILE_NAME);
+        if (!file.exists()) {
+            return "";
+        }
+
         FileInputStream fis = null;
 
         try {
@@ -55,8 +67,7 @@ public class NoteStorage {
             int size = fis.available();
             byte[] buffer = new byte[size];
             fis.read(buffer);
-            String note = new String(buffer);
-            return note;
+            return new String(buffer);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,5 +82,16 @@ public class NoteStorage {
             }
         }
         return "";
+    }
+
+    public void deleteNote() {
+        File file = new File(context.getFilesDir(), FILE_NAME);
+        if (file.exists()) {
+            if (file.delete()) {
+                Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Error deleting note", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
