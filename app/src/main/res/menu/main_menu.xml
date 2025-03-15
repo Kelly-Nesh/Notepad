@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_save"
         android:title="Save"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_clear"
-        android:icon="@drawable/ic_clear"
         android:title="Clear"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_paste"
+        android:title="Paste"
+        app:showAsAction="never" />
 </menu>
