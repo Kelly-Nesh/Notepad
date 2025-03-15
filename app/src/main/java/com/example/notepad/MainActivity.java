@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
             ClipData.Item item = clipData.getItemAt(0);
             String text = item.getText().toString();
-            noteEditText.setText(noteEditText.getText().toString() + text);
+            noteEditText.append(text);
         } else {
             Toast.makeText(this, "Clipboard is empty", Toast.LENGTH_SHORT).show();
         }
