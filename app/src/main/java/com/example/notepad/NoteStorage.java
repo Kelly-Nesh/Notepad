@@ -3,95 +3,95 @@ package com.example.notepad;
 import android.content.Context;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 public class NoteStorage {
-    private static final String FILE_NAME = "note.txt";
     private final Context context;
+    private ExecutorService executorService;
+    private NoteDao noteDao;
+
 
     public NoteStorage(Context context) {
         this.context = context;
+        this.executorService = ((MainActivity) context).getExecutorService();
+        this.noteDao = MainActivity.getNoteDatabase().noteDao();
     }
 
-    public void saveNote(String note) {
-        if (note.isEmpty()) {
-            Toast.makeText(context, "Cannot save empty note", Toast.LENGTH_SHORT).show();
+    public void saveNote(String noteContent, final int noteId) {
+        if (noteContent.isEmpty()) {
+            Toast.makeText(context, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
+            return;
         }
-        File file = new File(context.getFilesDir(), FILE_NAME);
-        FileOutputStream fos = null;
-        boolean fullySaved = false;
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(context, "Error creating file", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        try {
-            fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            fos.write(note.getBytes());
-            fullySaved = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Error saving note", Toast.LENGTH_SHORT).show();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                    if (fullySaved) {
-                        Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                Note note = new Note(noteContent);
+                if (noteId >= 0) {
+                    note.id = noteId;
+                    noteDao.update(note);
+                } else {
+                    noteDao.insert(note);
                 }
             }
-        }
+        });
+        Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
     }
 
-    public String loadNote() {
-        File file = new File(context.getFilesDir(), FILE_NAME);
-        if (!file.exists()) {
-            return "";
-        }
-
-        FileInputStream fis = null;
-
-        try {
-            fis = context.openFileInput(FILE_NAME);
-            int size = fis.available();
-            byte[] buffer = new byte[size];
-            fis.read(buffer);
-            return new String(buffer);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Error loading note", Toast.LENGTH_SHORT).show();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+    public void loadNote(final int noteId, final LoadNoteCallback callback) {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                Note note = noteDao.getNoteById(noteId);
+                if (note != null) {
+                    callback.onNoteLoaded(note.content);
+                } else {
+                    callback.onNoteLoaded("");
                 }
             }
-        }
-        return "";
+        });
     }
 
-    public void deleteNote() {
-        File file = new File(context.getFilesDir(), FILE_NAME);
-        if (file.exists()) {
-            if (file.delete()) {
-                Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Error deleting note", Toast.LENGTH_SHORT).show();
-            }
+    public void deleteNote(final int noteId) {
+        if (noteId < 0) {
+            Toast.makeText(context, "Cannot delete unsaved note!", Toast.LENGTH_SHORT).show();
+            return;
         }
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Delete: " + noteId);
+                Note note = noteDao.getNoteById(noteId);
+                if (note != null) {
+                    noteDao.delete(note);
+                    Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Note does not exist!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void getNoteList(final GetNoteListCallback callback) {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Note> notes = noteDao.getAllNotes();
+                List<Integer> noteIds = new ArrayList<>();
+                for (Note note : notes) {
+                    noteIds.add(note.id);
+                    ;
+                }
+                callback.onNoteListLoaded(noteIds);
+            }
+        });
+    }
+
+    public interface LoadNoteCallback {
+        void onNoteLoaded(String noteContent);
+    }
+
+    public interface GetNoteListCallback {
+        void onNoteListLoaded(List<Integer> noteIds);
     }
 }
