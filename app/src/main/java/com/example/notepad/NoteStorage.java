@@ -60,7 +60,6 @@ public class NoteStorage {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Delete: " + noteId);
                 Note note = noteDao.getNoteById(noteId);
                 if (note != null) {
                     noteDao.delete(note);

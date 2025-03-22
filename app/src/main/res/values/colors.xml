@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#437C83</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0000FF</color>
+
+    <!-- App-Specific Colors -->
+    <color name="colorPrimary">#FF6200EE</color> <!-- Purple 500 -->
+    <color name="colorPrimaryVariant">#FF3700B3</color> <!-- Purple 700 -->
+    <color name="colorOnPrimary">#FFFFFFFF</color> <!-- White -->
+    <color name="colorSecondary">#FF03DAC5</color> <!-- Teal 200 -->
+    <color name="colorSecondaryVariant">#FF018786</color> <!-- Teal 700 -->
+    <color name="colorOnSecondary">#FF000000</color> <!-- Black -->
+    <color name="backgroundLight">#FAFAFA</color> <!-- Light Gray -->
+    <color name="textPrimary">#212121</color> <!-- Dark Gray -->
+    <color name="textSecondary">#757575</color> <!-- Medium Gray -->
+    <color name="translucent_red">#80FF0000</color> <!-- Translucent Red -->
+
+    <!-- Dark Mode Colors -->
+    <color name="dark_colorPrimary">#FFBB86FC</color> <!-- Purple 200 -->
+    <color name="dark_colorPrimaryVariant">#FF6200EE</color> <!-- Purple 500 -->
+    <color name="dark_colorOnPrimary">#FF000000</color> <!-- Black -->
+    <color name="dark_purple_500">#FFBB86FC</color> <!-- Purple 200 -->
+    <color name="dark_purple_700">#FF6200EE</color>
+
+    <!-- Body Text Colors -->
+    <color name="bodyTextColor">@color/textPrimary</color> <!-- Dark Gray -->
+
+    <!-- EditText Colors -->
+    <color name="editTextTextColor">#F0F0F0</color> <!-- Dark Gray -->
+    <color name="editTextHintColor">@color/textSecondary</color> <!-- Medium Gray -->
+    <color name="editTextBackgroundColor">@color/backgroundLight</color> <!-- Light Gray -->
+
+    <!-- FAB Colors -->
+    <color name="my_fab_background_color">@color/teal_200</color> <!-- Teal 200 -->
+    <color name="my_fab_icon_color">@color/black</color>
+
 </resources>

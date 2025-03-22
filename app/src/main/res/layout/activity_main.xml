@@ -10,13 +10,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar">
+        android:theme="@style/Base.Theme.Notepad.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/Base.Theme.Notepad.PopupOverlay" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
@@ -29,6 +29,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="Add new note"
+        android:theme="@style/Base.Theme.Notepad"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
