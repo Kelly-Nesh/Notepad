@@ -3,9 +3,9 @@ package com.example.notepad;
 import android.content.Context;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
 public class NoteStorage {
     private final Context context;
     private ExecutorService executorService;
@@ -76,12 +76,7 @@ public class NoteStorage {
             @Override
             public void run() {
                 List<Note> notes = noteDao.getAllNotes();
-                List<Integer> noteIds = new ArrayList<>();
-                for (Note note : notes) {
-                    noteIds.add(note.id);
-                    ;
-                }
-                callback.onNoteListLoaded(noteIds);
+                callback.onNoteListLoaded(notes);
             }
         });
     }
@@ -91,6 +86,6 @@ public class NoteStorage {
     }
 
     public interface GetNoteListCallback {
-        void onNoteListLoaded(List<Integer> noteIds);
+        void onNoteListLoaded(List<Note> notes);
     }
 }
