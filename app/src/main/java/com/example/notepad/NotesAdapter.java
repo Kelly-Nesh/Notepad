@@ -35,13 +35,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         int lineCount = 0;
         int indexCount = 0;
         for (String x : currentNote.content.split("")) {
-            System.out.println(x);
             if (Objects.equals(x, "\n")) {
                 lineCount++;
-                System.out.println("Line Count: " + lineCount);
             }
             indexCount++;
-            System.out.println("Index Count: " + indexCount);
             if (lineCount == 5) {
                 break;
             }

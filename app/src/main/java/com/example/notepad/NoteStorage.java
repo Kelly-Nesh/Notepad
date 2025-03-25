@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NoteStorage {
     private final Context context;
@@ -14,7 +15,7 @@ public class NoteStorage {
 
     public NoteStorage(Context context) {
         this.context = context;
-        this.executorService = ((MainActivity) context).getExecutorService();
+        this.executorService = Executors.newFixedThreadPool(2);
         this.noteDao = MainActivity.getNoteDatabase().noteDao();
     }
 

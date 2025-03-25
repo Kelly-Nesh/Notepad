@@ -14,13 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     private static NoteDatabase noteDatabase;
     private NoteStorage noteStorage;
-    private ExecutorService executorService;
     private NotesAdapter notesAdapter;
     private List<Note> notes = new ArrayList<>();
 
@@ -31,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        executorService = Executors.newFixedThreadPool(2);
         noteDatabase = Room.databaseBuilder(getApplicationContext(), NoteDatabase.class, "note_database").build();
         setContentView(R.layout.activity_main);
 
@@ -53,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         notesRecyclerView.setAdapter(notesAdapter);
 
         loadNotes();
-    }
-
-    public ExecutorService getExecutorService() {
-        return executorService;
     }
 
     private void createNewNote() {
