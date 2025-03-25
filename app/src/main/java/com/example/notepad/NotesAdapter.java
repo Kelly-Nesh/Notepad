@@ -1,6 +1,9 @@
 package com.example.notepad;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +35,20 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note currentNote = notes.get(position);
+        holder.noteTextView.setText(getPreviewText(currentNote.content));
+        holder.itemView.setOnClickListener(v -> viewNote(currentNote.content));
+    }
+
+    private void viewNote(String noteContent) {
+        Intent intent = new Intent(context, NoteActivity.class);
+        intent.putExtra("noteContent", noteContent);
+        startActivity(context, intent, null);
+    }
+
+    private String getPreviewText(String text) {
         int lineCount = 0;
         int indexCount = 0;
-        for (String x : currentNote.content.split("")) {
+        for (String x : text.split("")) {
             if (Objects.equals(x, "\n")) {
                 lineCount++;
             }
@@ -43,10 +57,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
                 break;
             }
         }
-        String previewText = currentNote.content.substring(0,
-                Math.min(currentNote.content.length(), indexCount));
+        String previewText = text.substring(0,
+                Math.min(text.length(), indexCount));
         previewText = previewText.length() > 500 ? previewText.substring(0, 500) : previewText;
-        holder.noteTextView.setText(previewText);
+        return previewText;
     }
 
     @Override

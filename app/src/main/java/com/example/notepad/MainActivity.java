@@ -2,7 +2,6 @@ package com.example.notepad;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,14 +11,11 @@ import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static NoteDatabase noteDatabase;
     private NoteStorage noteStorage;
     private NotesAdapter notesAdapter;
-    private List<Note> notes = new ArrayList<>();
 
     public static NoteDatabase getNoteDatabase() {
         return noteDatabase;
@@ -36,12 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNewNote();
-            }
-        });
+        fab.setOnClickListener(v -> createNewNote());
 
         RecyclerView notesRecyclerView = findViewById(R.id.notesRecyclerView);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,17 +49,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadNotes() {
-        noteStorage.getNoteList(new NoteStorage.GetNoteListCallback() {
-            @Override
-            public void onNoteListLoaded(List<Note> notes) {
-                runOnUiThread(() -> {
-                    notesAdapter.setNotes(notes);
-                });
-            }
-        });
-    }
-
-    public interface NoteListCallback {
-        void onNoteListUpdated(List<Note> notes);
+        noteStorage.getNoteList(notes -> runOnUiThread(() -> notesAdapter.setNotes(notes)));
     }
 }

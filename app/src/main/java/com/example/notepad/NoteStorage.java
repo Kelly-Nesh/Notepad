@@ -12,7 +12,6 @@ public class NoteStorage {
     private ExecutorService executorService;
     private NoteDao noteDao;
 
-
     public NoteStorage(Context context) {
         this.context = context;
         this.executorService = Executors.newFixedThreadPool(2);
