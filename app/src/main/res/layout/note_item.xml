@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="?attr/colorSecondary"
     app:cardCornerRadius="4dp"
     app:cardElevation="3dp">
 
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Note content goes here"
-        android:textColor="@color/material_dynamic_neutral_variant30"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="16sp" />
 
 </androidx.cardview.widget.CardView>
