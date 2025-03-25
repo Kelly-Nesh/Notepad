@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Note> notes = new ArrayList<>();
 
     public NotesAdapter(Context context) {
@@ -31,7 +32,24 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note currentNote = notes.get(position);
-        holder.noteTextView.setText(currentNote.content.substring(0, Math.min(currentNote.content.length(), 200)));
+        int lineCount = 0;
+        int indexCount = 0;
+        for (String x : currentNote.content.split("")) {
+            System.out.println(x);
+            if (Objects.equals(x, "\n")) {
+                lineCount++;
+                System.out.println("Line Count: " + lineCount);
+            }
+            indexCount++;
+            System.out.println("Index Count: " + indexCount);
+            if (lineCount == 5) {
+                break;
+            }
+        }
+        String previewText = currentNote.content.substring(0,
+                Math.min(currentNote.content.length(), indexCount));
+        previewText = previewText.length() > 500 ? previewText.substring(0, 500) : previewText;
+        holder.noteTextView.setText(previewText);
     }
 
     @Override
@@ -45,7 +63,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     }
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
-        private TextView noteTextView;
+        private final TextView noteTextView;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
