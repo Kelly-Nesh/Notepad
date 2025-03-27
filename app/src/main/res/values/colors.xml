@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Basic Colors -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="red">#FF0000</color>
-    <color name="green">#00FF00</color>
-    <color name="blue">#0000FF</color>
+    <!-- Light Theme Colors -->
+    <color name="light_colorPrimary">#592E2E</color>
+    <color name="light_colorPrimaryVariant">#301919</color>
+    <color name="light_colorSecondary">#D3BDBB</color>
+    <color name="light_colorSecondaryVariant">#A69290</color>
+    <color name="light_colorOnPrimary">#FFFFFF</color>
+    <color name="light_colorOnSecondary">#000000</color>
+    <color name="light_colorSurface">#F8F8F8</color>
+    <color name="light_colorOnSurface">#212121</color>
+    <color name="light_colorError">#B00020</color>
+    <color name="light_colorOnError">#FFFFFF</color>
+    <color name="light_colorBackground">#FFFFFF</color>
+    <color name="light_colorOnBackground">#000000</color>
 
-    <color name="colorPrimary">#A0855B</color>
-    <color name="colorPrimaryVariant">#8C734F</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorSecondary">#F5F5DC</color>
-    <color name="colorSecondaryVariant">#E8E0D4</color>
-    <color name="colorOnSecondary">#54453D</color>
-    <color name="backgroundLight">#FFF8DC</color>
-    <color name="editViewBackground">#FAF0E6</color>
-    <color name="editViewText">#212121</color>
-    <color name="fabColor">#B8860B</color>
-    <color name="textPrimary">#3E2723</color>
-    <color name="textSecondary">#795548</color>
-    <color name="translucent_red">#80FF0000</color>
-
-    <color name="dark_colorPrimary">#54453D</color>
-    <color name="dark_colorPrimaryVariant">#43362E</color>
-    <color name="dark_colorOnPrimary">#F0E6D2</color>
-    <color name="dark_colorSecondary">#2E2E2E</color>
-    <color name="dark_colorSecondaryVariant">#3C3C3C</color>
-    <color name="dark_colorOnSecondary">#A0855B</color>
-    <color name="dark_backgroundLight">#1A1A1A</color>
-    <color name="dark_editViewBackground">#121212</color>
-    <color name="dark_editViewText">#E0E0E0</color>
-    <color name="dark_fabColor">#D2B48C</color>
-
-    <!-- Body Text Colors -->
-    <color name="bodyTextColor">@color/textPrimary</color> <!-- Dark Gray -->
-
-    <!-- EditText Colors -->
-    <color name="editTextTextColor">#F0F0F0</color> <!-- Dark Gray -->
-    <color name="editTextHintColor">@color/textSecondary</color> <!-- Medium Gray -->
-    <color name="editTextBackgroundColor">@color/backgroundLight</color> <!-- Light Gray -->
+    <!-- Dark Theme Colors -->
+    <color name="dark_colorPrimary">#301919</color>
+    <color name="dark_colorPrimaryVariant">#1E0F0F</color>
+    <color name="dark_colorSecondary">#D3BDBB</color>
+    <color name="dark_colorSecondaryVariant">#A69290</color>
+    <color name="dark_colorOnPrimary">#FFFFFF</color>
+    <color name="dark_colorOnSecondary">#000000</color>
+    <color name="dark_colorSurface">#121212</color>
+    <color name="dark_colorOnSurface">#EEEEEE</color>
+    <color name="dark_colorError">#CF6679</color>
+    <color name="dark_colorOnError">#000000</color>
+    <color name="dark_colorBackground">#121212</color>
+    <color name="dark_colorOnBackground">#EEEEEE</color>
 </resources>
