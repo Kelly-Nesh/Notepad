@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Note content goes here"
-        android:textColor="?attr/colorOnSecondary"
-        android:background="@color/dark_colorOnPrimary"
+        android:textColor="@color/light_colorOnPrimary"
+        android:background="@color/light_colorSecondaryVariant"
         android:textSize="16sp" />
 
 </androidx.cardview.widget.CardView>

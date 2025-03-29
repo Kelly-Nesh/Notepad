@@ -5,17 +5,11 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+    <include layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/app_name"
-        app:popupTheme="?attr/popupMenuStyle"
-        app:titleTextColor="@color/light_colorOnPrimary" />
+        app:popupTheme="?attr/popupMenuStyle" />
 
     <EditText
         android:id="@+id/noteEditText"
@@ -23,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/light_colorSecondary"
+        android:background="@color/light_colorBackground"
         android:gravity="top|start"
         android:hint="Enter your note here"
         android:inputType="textMultiLine"

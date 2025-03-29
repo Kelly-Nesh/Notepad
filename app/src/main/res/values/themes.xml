@@ -21,8 +21,15 @@
         <item name="popupMenuStyle">@style/CustomPopupMenu</item>
     </style>
 
-    <style name="Base.Theme.Notepad.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar">
-        <item name="colorSurface">@color/light_colorPrimary</item>
+    <style name="ToolbarStyle" parent="Theme.Material3.Light">
+        <item name="android:background">@color/light_colorPrimary</item>
+        <item name="titleTextColor">@color/light_colorOnPrimary</item>
+        <item name="colorControlNormal">@color/light_colorOnPrimary</item>
+        <item name="actionMenuTextColor">@color/light_colorOnPrimary</item>
+    </style>
+
+    <style name="ActionMenuAppearance" parent="Theme.Material3.Light">
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu">
