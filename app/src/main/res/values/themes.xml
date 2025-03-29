@@ -2,6 +2,10 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Notepad" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Ensure no default action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
         <item name="colorPrimary">@color/light_colorPrimary</item>
         <item name="colorPrimaryVariant">@color/light_colorPrimaryVariant</item>
         <item name="colorSecondary">@color/light_colorSecondary</item>
@@ -14,14 +18,17 @@
         <item name="colorOnError">@color/light_colorOnError</item>
         <item name="android:colorBackground">@color/light_colorBackground</item>
         <item name="colorOnBackground">@color/light_colorOnBackground</item>
-        <item name="windowActionBar">false</item>
+        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
     </style>
 
     <style name="Base.Theme.Notepad.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar">
         <item name="colorSurface">@color/light_colorPrimary</item>
     </style>
 
-    <style name="Base.Theme.Notepad.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
+    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu">
+        <item name="android:backgroundTint">@color/light_colorPrimary</item>
+        <item name="android:textColor">@color/light_colorOnPrimary</item>
+    </style>
 
     <style name="Base.Theme.Notepad.FAB" parent="ThemeOverlay.Material3.FloatingActionButton.Surface">
         <item name="backgroundTint">@color/light_colorPrimary</item>

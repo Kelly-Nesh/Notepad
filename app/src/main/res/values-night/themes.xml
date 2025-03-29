@@ -17,13 +17,11 @@
         <item name="colorOnBackground">@color/dark_colorOnBackground</item>
     </style>
 
-    <style name="Base.Theme.Notepad.AppBarOverlay" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Base.Theme.Notepad.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar">
         <item name="colorSurface">@color/dark_colorPrimaryVariant</item>
         <item name="colorSurfaceVariant">@color/dark_colorPrimary</item>
         <item name="colorOnSurface">@color/dark_colorOnSurface</item>
     </style>
-
-    <style name="Base.Theme.Notepad.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="Base.Theme.Notepad.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/light_colorPrimary</item>
