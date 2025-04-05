@@ -11,8 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:liftOnScroll="false"
-        android:theme="@style/Base.Theme.Notepad.AppBarOverlay">
+        app:liftOnScroll="false">
 
         <include layout="@layout/toolbar"/>
 
@@ -22,7 +21,6 @@
         android:id="@+id/notesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_colorBackground"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:scrollbars="vertical"

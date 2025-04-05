@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#603601</color>
+    <color name="primaryColorVariant">#361500</color>
+    <color name="secondaryColor">#C8AE7D</color>
+    <color name="colorSurface">#65451F</color>
+    <color name="main_bg">#4A2F1F</color>
+    <color name="primary_text">#EAC696</color>
+    <color name="colorError">#765827</color>
+    <color name="colorOnError">#EAC696</color>
+</resources>

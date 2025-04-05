@@ -6,41 +6,50 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="colorPrimary">@color/light_colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/light_colorPrimaryVariant</item>
-        <item name="colorSecondary">@color/light_colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/light_colorSecondaryVariant</item>
-        <item name="colorOnPrimary">@color/light_colorOnPrimary</item>
-        <item name="colorOnSecondary">@color/light_colorOnSecondary</item>
-        <item name="colorSurface">@color/light_colorSurface</item>
-        <item name="colorOnSurface">@color/light_colorOnSurface</item>
-        <item name="colorError">@color/light_colorError</item>
-        <item name="colorOnError">@color/light_colorOnError</item>
-        <item name="android:colorBackground">@color/light_colorBackground</item>
-        <item name="colorOnBackground">@color/light_colorOnBackground</item>
-        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
+        <!-- App-wide colors -->
+        <item name="colorPrimary">@color/primaryColor</item> <!-- For app bar and key UI elements -->
+        <item name="colorPrimaryVariant">@color/primaryColorVariant</item> <!-- For status bar or darker complementary areas -->
+        <item name="colorSecondary">@color/secondaryColor</item> <!-- For FAB, highlights, or other accents -->
+        <item name="colorOnPrimary">@color/primary_text</item> <!-- Text/icons on primary elements -->
+        <item name="colorOnSecondary">@color/primary_text</item> <!-- Text/icons on secondary (accent) elements -->
+        <item name="colorSurface">@color/colorSurface</item> <!-- For cards, menus, or surfaces above the background -->
+        <item name="colorOnSurface">@color/primary_text</item> <!-- Text/icons on surface backgrounds -->
+        <item name="colorError">@color/colorError</item> <!-- For error states or notifications -->
+        <item name="colorOnError">@color/colorOnError</item> <!-- Text/icons on error backgrounds -->
+        <item name="android:colorBackground">@color/main_bg</item> <!-- Main app background -->
     </style>
 
     <style name="ToolbarStyle" parent="Theme.Material3.Light">
-        <item name="android:background">@color/light_colorPrimary</item>
-        <item name="titleTextColor">@color/light_colorOnPrimary</item>
-        <item name="colorControlNormal">@color/light_colorOnPrimary</item>
-        <item name="actionMenuTextColor">@color/light_colorOnPrimary</item>
-    </style>
-
-    <style name="ActionMenuAppearance" parent="Theme.Material3.Light">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu">
-        <item name="android:backgroundTint">@color/light_colorPrimary</item>
-        <item name="android:textColor">@color/light_colorOnPrimary</item>
+        <!-- Toolbar-specific colors -->
+        <item name="android:background">@color/primaryColor</item> <!-- Toolbar background -->
+        <item name="titleTextColor">@color/secondaryColor</item> <!-- Toolbar title text color -->
+        <item name="colorControlNormal">@color/secondaryColor</item> <!-- Normal state of controls on the toolbar -->
+        <item name="actionMenuTextColor">@color/secondaryColor</item> <!-- Menu item text color -->
     </style>
 
     <style name="Base.Theme.Notepad.FAB" parent="ThemeOverlay.Material3.FloatingActionButton.Surface">
-        <item name="backgroundTint">@color/light_colorPrimary</item>
-        <item name="tint">@color/light_colorOnPrimary</item>
+        <!-- Floating Action Button -->
+        <item name="backgroundTint">@color/secondaryColor</item> <!-- FAB background color -->
+        <item name="tint">@color/primaryColorVariant</item> <!-- FAB icon/text color -->
     </style>
 
+    <style name="CustomPopupMenu" parent="Widget.Material3.PopupMenu">
+        <!-- Popup menu colors -->
+        <item name="android:backgroundTint">@color/colorSurface</item> <!-- Popup menu background -->
+        <item name="android:textColor">@color/primary_text</item> <!-- Popup menu text -->
+    </style>
+
+    <style name="TextAppearance.Notepad.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name='Widget.Notepad.EditText' parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColorHint">?attr/colorOnSurface</item>
+        <item name="boxBackgroundColor">?attr/colorSurface</item>
+        <item name="android:textSize">18sp</item>
+    </style>
     <style name="Theme.Notepad" parent="Base.Theme.Notepad" />
 </resources>

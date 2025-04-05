@@ -1,56 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Light Theme Colors -->
-    <color name="light_colorPrimary">#A67B5B</color>
-    <color name="light_colorPrimaryVariant">#3E2723</color>
-    <color name="light_colorSecondary">#D4AF37</color>
-    <color name="light_colorSecondaryVariant">#EFE4B0</color>
-    <color name="light_colorOnPrimary">#3E2723</color>
-    <color name="light_colorOnSecondary">#3E2723</color>
-    <color name="light_colorSurface">#F5F5E0</color>
-    <color name="light_colorOnSurface">#3E2723</color>
-    <color name="light_colorError">#B00020</color>
-    <color name="light_colorOnError">#FFFFFF</color>
-    <color name="light_colorBackground">#F5F5DC</color>
-    <color name="light_colorOnBackground">#3E2723</color>
-
-    <!-- Dark Theme Colors -->
-    <color name="dark_colorPrimary">#3E2723</color>
-    <color name="dark_colorPrimaryVariant">#4B3228</color>
-    <color name="dark_colorSecondary">#CB6D51</color>
-    <color name="dark_colorSecondaryVariant">#5A3C34</color>
-    <color name="dark_colorOnPrimary">#F5F5DC</color>
-    <color name="dark_colorOnSecondary">#F5F5DC</color>
-    <color name="dark_colorSurface">#5A3C34</color>
-    <color name="dark_colorOnSurface">#F5F5DC</color>
-    <color name="dark_colorError">#CF6679</color>
-    <color name="dark_colorOnError">#000000</color>
-    <color name="dark_colorBackground">#3E2723</color>
-    <color name="dark_colorOnBackground">#F5F5DC</color>
-
-    /*
-    colorPrimary and colorPrimaryVariant:
-
-        Define the main branding colors for the toolbar or primary UI elements.
-
-    colorSecondary and colorSecondaryVariant:
-
-        Used for accent elements like buttons or highlights.
-
-    colorOnPrimary and colorOnSecondary:
-
-        Text colors that contrast well with the primary and secondary background colors.
-
-    colorSurface:
-
-        Used for component surfaces like EditText and TextView.
-
-    colorBackground:
-
-        The overarching app background color.
-
-    colorError and colorOnError:
-
-        Specify colors for error states and their corresponding text.
-    */
+    <color name="primaryColor">#765827</color> <!-- Main color for prominent elements like the app bar -->
+    <color name="primaryColorVariant">#65451F</color> <!-- A darker version of the primary color, used for areas like the status bar -->
+    <color name="secondaryColor">#C8AE7D</color> <!-- Accent color for interactive elements like FAB and highlights -->
+    <color name="colorSurface">#C8AE7D</color> <!-- Background color for surfaces such as cards -->
+    <color name="main_bg">#EAC696</color> <!-- The primary background color for the app's main area -->
+    <color name="primary_text">#65451F</color> <!-- Color for primary text throughout the app -->
+    <color name="colorError">#765827</color> <!-- Color used to indicate errors, such as in error messages -->
+    <color name="colorOnError">#FFFFFF</color> <!-- Text color displayed on error backgrounds for good contrast -->
 </resources>

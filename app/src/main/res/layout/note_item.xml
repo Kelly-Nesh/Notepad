@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="4dp"
-    app:cardElevation="1dp">
+    app:cardElevation="4dp">
 
     <TextView
         android:id="@+id/noteTextView"
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Note content goes here"
-        android:textColor="@color/light_colorOnPrimary"
-        android:background="@color/light_colorSecondaryVariant"
+        android:textColor="@color/primary_text"
+        android:background="@color/colorSurface"
         android:textSize="16sp" />
 
 </androidx.cardview.widget.CardView>

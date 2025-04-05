@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
     <style name="Base.Theme.Notepad" parent="Theme.Material3.DayNight.NoActionBar">
-    <!-- Dark theme -->
-        <item name="colorPrimary">@color/dark_colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/dark_colorPrimaryVariant</item>
-        <item name="colorSecondary">@color/dark_colorPrimaryVariant</item>
-        <item name="colorSecondaryVariant">@color/dark_colorSecondaryVariant</item>
-        <item name="colorOnPrimary">@color/dark_colorOnPrimary</item>
-        <item name="colorOnSecondary">@color/dark_colorOnSecondary</item>
-        <item name="colorSurface">@color/dark_colorSurface</item>
-        <item name="colorOnSurface">@color/dark_colorOnSurface</item>
-        <item name="colorError">@color/dark_colorError</item>
-        <item name="colorOnError">@color/dark_colorOnError</item>
-        <item name="android:colorBackground">@color/dark_colorBackground</item>
-        <item name="colorOnBackground">@color/dark_colorOnBackground</item>
-    </style>
+        <!-- Ensure no default action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
-    <style name="Base.Theme.Notepad.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar">
-        <item name="colorSurface">@color/dark_colorPrimaryVariant</item>
-        <item name="colorSurfaceVariant">@color/dark_colorPrimary</item>
-        <item name="colorOnSurface">@color/dark_colorOnSurface</item>
-    </style>
-
-    <style name="Base.Theme.Notepad.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/light_colorPrimary</item>
-        <item name="tint">@color/dark_colorPrimaryVariant</item>
+        <!-- App-wide colors -->
+        <item name="colorPrimary">@color/primaryColor</item> <!-- For app bar and key UI elements -->
+        <item name="colorPrimaryVariant">@color/primaryColorVariant</item> <!-- For status bar or darker complementary areas -->
+        <item name="colorSecondary">@color/secondaryColor</item> <!-- For FAB, highlights, or other accents -->
+        <item name="colorOnPrimary">@color/primary_text</item> <!-- Text/icons on primary elements -->
+        <item name="colorOnSecondary">@color/primary_text</item> <!-- Text/icons on secondary (accent) elements -->
+        <item name="colorSurface">@color/colorSurface</item> <!-- For cards, menus, or surfaces above the background -->
+        <item name="colorOnSurface">@color/primary_text</item> <!-- Text/icons on surface backgrounds -->
+        <item name="colorError">@color/colorError</item> <!-- For error states or notifications -->
+        <item name="colorOnError">@color/colorOnError</item> <!-- Text/icons on error backgrounds -->
+        <item name="android:colorBackground">@color/main_bg</item> <!-- Main app background -->
     </style>
 </resources>
