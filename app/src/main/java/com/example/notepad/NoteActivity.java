@@ -1,16 +1,19 @@
 package com.example.notepad;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
@@ -57,21 +60,63 @@ public class NoteActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
-            String note = noteEditText.getText().toString();
-            noteStorage.saveNote(note, currentNoteId);
-            List<Note> notes = notesAdapter.getNotes();
-            if (currentNoteId < 0) {
-                notes.add(new Note(note));
-                notesAdapter.notifyItemInserted(notes.size());
-            } else {
-                notes.get(currentNotePosition).content = note;
-                notesAdapter.notifyItemChanged(currentNotePosition);
-            }
+            saveNote();
+            return true;
+        } else if (id == R.id.action_clear) {
+            noteEditText.setText("");
+            return true;
+        } else if (id == R.id.action_paste) {
+            pasteNote();
+        } else if (id == R.id.action_delete) {
+            deleteNote();
             return true;
         } else if (id == android.R.id.home) {
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveNote() {
+        String note = noteEditText.getText().toString();
+
+        if (!noteStorage.saveNote(note, currentNoteId)) {/* If not saved */
+            return;
+        }
+        List<Note> notes = notesAdapter.getNotes();
+        if (currentNoteId < 0) {
+            notes.add(new Note(note));
+            notesAdapter.notifyItemInserted(notes.size());
+        } else {
+            notes.get(currentNotePosition).content = note;
+            notesAdapter.notifyItemChanged(currentNotePosition);
+        }
+    }
+
+    private void pasteNote() {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard.hasPrimaryClip()) {
+            ClipData clipData = clipboard.getPrimaryClip();
+            if (clipData == null) {
+                return;
+            }
+            ClipData.Item item = clipData.getItemAt(0);
+            String text = item.getText().toString();
+            text = noteEditText.getText().toString() + text;
+            noteEditText.setText(text);
+        } else {
+            Toast.makeText(this, "Clipboard is empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteNote() {
+        if (currentNoteId < 0) {
+            finish();
+            return;
+        }
+        noteStorage.deleteNote(currentNoteId);
+        notesAdapter.getNotes().remove(currentNotePosition);
+        notesAdapter.notifyItemRemoved(currentNotePosition);
+        finish();
     }
 }

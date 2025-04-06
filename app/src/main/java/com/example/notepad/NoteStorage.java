@@ -18,10 +18,10 @@ public class NoteStorage {
         this.noteDao = MainActivity.getNoteDatabase().noteDao();
     }
 
-    public void saveNote(String noteContent, final int noteId) {
+    public boolean saveNote(String noteContent, final int noteId) {
         if (noteContent.isEmpty()) {
             Toast.makeText(context, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
         executorService.execute(new Runnable() {
             @Override
@@ -36,6 +36,7 @@ public class NoteStorage {
             }
         });
         Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     public void loadNote(final int noteId, final LoadNoteCallback callback) {
@@ -61,14 +62,10 @@ public class NoteStorage {
             @Override
             public void run() {
                 Note note = noteDao.getNoteById(noteId);
-                if (note != null) {
-                    noteDao.delete(note);
-                    Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Note does not exist!", Toast.LENGTH_SHORT).show();
-                }
+                noteDao.delete(note);
             }
         });
+        Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
     }
 
     public void getNoteList(final GetNoteListCallback callback) {
