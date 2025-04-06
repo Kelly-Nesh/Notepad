@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
         return noteDatabase;
     }
 
+    public static RecyclerView notesRecyclerView;
+
+    public static RecyclerView getNotesRecyclerView() {return notesRecyclerView;}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> createNewNote());
 
-        RecyclerView notesRecyclerView = findViewById(R.id.notesRecyclerView);
+        notesRecyclerView = findViewById(R.id.notesRecyclerView);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         notesAdapter = new NotesAdapter(this);
         notesRecyclerView.setAdapter(notesAdapter);

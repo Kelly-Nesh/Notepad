@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.HashMap;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
@@ -23,6 +24,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     public NotesAdapter(Context context) {
         this.context = context;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
     }
 
     @NonNull
@@ -36,12 +41,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note currentNote = notes.get(position);
         holder.noteTextView.setText(getPreviewText(currentNote.content));
-        holder.itemView.setOnClickListener(v -> viewNote(currentNote.content));
+        holder.itemView.setOnClickListener(v -> viewNote(currentNote.content, currentNote.id, position));
     }
 
-    private void viewNote(String noteContent) {
+    private void viewNote(String noteContent, int noteId, int position) {
         Intent intent = new Intent(context, NoteActivity.class);
-        intent.putExtra("noteContent", noteContent);
+        intent.putExtra("noteContent", noteContent)
+                .putExtra("noteId", noteId)
+                .putExtra("position", position);
         startActivity(context, intent, null);
     }
 
@@ -59,7 +66,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         }
         String previewText = text.substring(0,
                 Math.min(text.length(), indexCount));
-        previewText = previewText.length() > 500 ? previewText.substring(0, 500) : previewText;
+        previewText = previewText.length() > 500 ? previewText.substring(0, 300) : previewText;
         return previewText;
     }
 
