@@ -39,20 +39,6 @@ public class NoteStorage {
         return true;
     }
 
-    public void loadNote(final int noteId, final LoadNoteCallback callback) {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                Note note = noteDao.getNoteById(noteId);
-                if (note != null) {
-                    callback.onNoteLoaded(note.content);
-                } else {
-                    callback.onNoteLoaded("");
-                }
-            }
-        });
-    }
-
     public void deleteNote(final int noteId) {
         if (noteId < 0) {
             Toast.makeText(context, "Cannot delete unsaved note!", Toast.LENGTH_SHORT).show();
@@ -76,10 +62,6 @@ public class NoteStorage {
                 callback.onNoteListLoaded(notes);
             }
         });
-    }
-
-    public interface LoadNoteCallback {
-        void onNoteLoaded(String noteContent);
     }
 
     public interface GetNoteListCallback {

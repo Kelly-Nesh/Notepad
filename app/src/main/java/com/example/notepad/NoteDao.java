@@ -20,7 +20,7 @@ public abstract class NoteDao {
     @Delete
     abstract void delete(Note note);
 
-    @Query("SELECT * FROM notes")
+    @Query("SELECT * FROM notes ORDER BY id DESC")
     abstract List<Note> getAllNotes();
 
     /* Same as getAllNotes()

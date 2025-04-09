@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -14,21 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 public class NoteActivity extends AppCompatActivity {
     private EditText noteEditText;
     private NoteStorage noteStorage;
     private int currentNoteId = -1;
     private int currentNotePosition = -1;
     private NotesAdapter notesAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        RecyclerView recyclerView = MainActivity.getNotesRecyclerView();
+        recyclerView = MainActivity.getNotesRecyclerView();
         notesAdapter = (NotesAdapter) recyclerView.getAdapter();
 
         noteEditText = findViewById(R.id.noteEditText);
@@ -63,6 +63,7 @@ public class NoteActivity extends AppCompatActivity {
             saveNote();
             return true;
         } else if (id == R.id.action_clear) {
+//            createNotes();
             noteEditText.setText("");
             return true;
         } else if (id == R.id.action_paste) {
@@ -83,12 +84,12 @@ public class NoteActivity extends AppCompatActivity {
         if (!noteStorage.saveNote(note, currentNoteId)) {/* If not saved */
             return;
         }
-        List<Note> notes = notesAdapter.getNotes();
         if (currentNoteId < 0) {
-            notes.add(new Note(note));
-            notesAdapter.notifyItemInserted(notes.size());
+            notesAdapter.getNotes().add(0, new Note(note));
+            notesAdapter.notifyItemInserted(0);
+            recyclerView.smoothScrollToPosition(0);
         } else {
-            notes.get(currentNotePosition).content = note;
+            notesAdapter.getNotes().get(currentNotePosition).content = note;
             notesAdapter.notifyItemChanged(currentNotePosition);
         }
     }
@@ -114,9 +115,41 @@ public class NoteActivity extends AppCompatActivity {
             finish();
             return;
         }
-        noteStorage.deleteNote(currentNoteId);
         notesAdapter.getNotes().remove(currentNotePosition);
         notesAdapter.notifyItemRemoved(currentNotePosition);
+        notesAdapter.notifyItemRangeChanged(currentNotePosition, notesAdapter.getNotes().size() - currentNotePosition);
+        noteStorage.deleteNote(currentNoteId);
         finish();
+    }
+
+    /* Create testing notes */
+    private void createNotes() {
+        String[] paragraphs = {
+                getResources().getString(R.string.paragraph1),
+                getResources().getString(R.string.paragraph2),
+                getResources().getString(R.string.paragraph3),
+                getResources().getString(R.string.paragraph4),
+                getResources().getString(R.string.paragraph5),
+                getResources().getString(R.string.paragraph6),
+                getResources().getString(R.string.paragraph7),
+                getResources().getString(R.string.paragraph8),
+                getResources().getString(R.string.paragraph9),
+                getResources().getString(R.string.paragraph10),
+                getResources().getString(R.string.paragraph11),
+                getResources().getString(R.string.paragraph12),
+                getResources().getString(R.string.paragraph13),
+                getResources().getString(R.string.paragraph14),
+                getResources().getString(R.string.paragraph15),
+                getResources().getString(R.string.paragraph16),
+                getResources().getString(R.string.paragraph17),
+                getResources().getString(R.string.paragraph18),
+                getResources().getString(R.string.paragraph19),
+                getResources().getString(R.string.paragraph20)
+        };
+
+
+        for (String p : paragraphs) {
+            noteStorage.saveNote(p, -1);
+        }
     }
 }
