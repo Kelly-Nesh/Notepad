@@ -40,10 +40,6 @@ public class NoteStorage {
     }
 
     public void deleteNote(final int noteId) {
-        if (noteId < 0) {
-            Toast.makeText(context, "Cannot delete unsaved note!", Toast.LENGTH_SHORT).show();
-            return;
-        }
         executorService.execute(new Runnable() {
             @Override
             public void run() {
