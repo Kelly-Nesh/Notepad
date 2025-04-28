@@ -39,15 +39,15 @@ public class NoteStorage {
         return true;
     }
 
-    public void deleteNote(final int noteId) {
+    public void deleteNote(final int noteId, final DeleteNoteCallback callback) {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
                 Note note = noteDao.getNoteById(noteId);
                 noteDao.delete(note);
+                callback.onNoteDeleted();
             }
         });
-        Toast.makeText(context, "Note deleted!", Toast.LENGTH_SHORT).show();
     }
 
     public void getNoteList(final GetNoteListCallback callback) {
@@ -62,5 +62,8 @@ public class NoteStorage {
 
     public interface GetNoteListCallback {
         void onNoteListLoaded(List<Note> notes);
+    }
+    public interface DeleteNoteCallback {
+        void onNoteDeleted();
     }
 }

@@ -115,10 +115,13 @@ public class NoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Cannot delete note. Note is not saved.", Toast.LENGTH_SHORT).show();
             return;
         }
+        System.out.println("Deleting note with id: " + currentNoteId);
         notesAdapter.getNotes().remove(currentNotePosition);
         notesAdapter.notifyItemRemoved(currentNotePosition);
         notesAdapter.notifyItemRangeChanged(currentNotePosition, notesAdapter.getNotes().size() - currentNotePosition);
-        noteStorage.deleteNote(currentNoteId);
+        noteStorage.deleteNote(currentNoteId, () -> runOnUiThread(()-> {
+            Toast.makeText(this, "Note deleted!", Toast.LENGTH_SHORT).show();
+        }));
         finish();
     }
 
