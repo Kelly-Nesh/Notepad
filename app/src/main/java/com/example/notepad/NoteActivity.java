@@ -3,8 +3,8 @@ package com.example.notepad;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -60,7 +60,12 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_save) {
+        if (id == R.id.action_share) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, noteEditText.getText().toString());
+            startActivity(Intent.createChooser(shareIntent, "Share Note"));
+        } else if (id == R.id.action_save) {
             saveNote();
             return true;
         } else if (id == R.id.action_clear) {
