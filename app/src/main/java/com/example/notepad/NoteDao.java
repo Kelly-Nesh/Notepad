@@ -33,4 +33,7 @@ public abstract class NoteDao {
 
     @Query("SELECT * FROM notes WHERE id = :noteId")
     abstract Note getNoteById(int noteId);
+
+    @Query("SELECT * FROM notes ORDER BY id DESC LIMIT 1")
+    abstract int getNewNoteId();
 }

@@ -18,7 +18,7 @@ public class NoteStorage {
         this.noteDao = MainActivity.getNoteDatabase().noteDao();
     }
 
-    public boolean saveNote(String noteContent, final int noteId) {
+    public boolean saveNote(String noteContent, final int noteId, SaveNoteCallback callback) {
         if (noteContent.isEmpty()) {
             Toast.makeText(context, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
             return false;
@@ -30,12 +30,13 @@ public class NoteStorage {
                 if (noteId >= 0) {
                     note.id = noteId;
                     noteDao.update(note);
+                    callback.onNoteSaved(note.id);
                 } else {
                     noteDao.insert(note);
+                    callback.onNoteSaved(noteDao.getNewNoteId());
                 }
             }
         });
-        Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -63,6 +64,10 @@ public class NoteStorage {
     public interface GetNoteListCallback {
         void onNoteListLoaded(List<Note> notes);
     }
+    public interface SaveNoteCallback {
+        void onNoteSaved(int noteId);
+    }
+
     public interface DeleteNoteCallback {
         void onNoteDeleted();
     }
