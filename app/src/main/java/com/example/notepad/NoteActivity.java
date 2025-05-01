@@ -67,16 +67,13 @@ public class NoteActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_share) {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            String message = noteTitleText.getText().toString() + "\n\n" + noteEditText.getText().toString();
-            shareIntent.putExtra(Intent.EXTRA_TEXT, message);
-            startActivity(Intent.createChooser(shareIntent, "Share Note"));
+            shareNote();
+            return true;
         } else if (id == R.id.action_save) {
             saveNote();
             return true;
         } else if (id == R.id.action_clear) {
-//            createNotes();
+            createNotes();
             noteEditText.setText("");
             return true;
         } else if (id == R.id.action_paste) {
@@ -89,6 +86,20 @@ public class NoteActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareNote() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String message = noteEditText.getText().toString();
+        ;
+        String title = noteTitleText.getText().toString();
+        if (!title.isBlank()) {
+            message = title + "\n\n" + message;
+        }
+        System.out.println("---------------------------------------------\n\n\t" + title + "\n\n" + message);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message);
+        startActivity(Intent.createChooser(shareIntent, "Share Note"));
     }
 
     private void saveNote() {
