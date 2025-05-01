@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteActivity extends AppCompatActivity {
+    private EditText noteTitleText;
     private EditText noteEditText;
     private NoteStorage noteStorage;
     private int currentNoteId = -1;
@@ -32,6 +33,7 @@ public class NoteActivity extends AppCompatActivity {
         recyclerView = MainActivity.getNotesRecyclerView();
         notesAdapter = (NotesAdapter) recyclerView.getAdapter();
 
+        noteTitleText = findViewById(R.id.noteTitleText);
         noteEditText = findViewById(R.id.noteEditText);
         noteStorage = new NoteStorage(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -41,9 +43,13 @@ public class NoteActivity extends AppCompatActivity {
         // Check if there is a note content to load
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            String noteTitle = extras.getString("noteTitle");
             String noteContent = extras.getString("noteContent");
             currentNoteId = extras.getInt("noteId");
             currentNotePosition = extras.getInt("position");
+            if (noteTitle != null) {
+                noteTitleText.setText(noteTitle);
+            }
             if (noteContent != null) {
                 noteEditText.setText(noteContent);
             }
@@ -63,6 +69,7 @@ public class NoteActivity extends AppCompatActivity {
         if (id == R.id.action_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, noteTitleText.getText().toString());
             shareIntent.putExtra(Intent.EXTRA_TEXT, noteEditText.getText().toString());
             startActivity(Intent.createChooser(shareIntent, "Share Note"));
         } else if (id == R.id.action_save) {
@@ -85,12 +92,13 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
+        String title = noteTitleText.getText().toString();
         String note = noteEditText.getText().toString();
 
-        boolean saved = noteStorage.saveNote(note, currentNoteId, (noteId) -> {
+        boolean saved = noteStorage.saveNote(title, note, currentNoteId, (noteId) -> {
             runOnUiThread(() -> {
                 if (currentNoteId < 0) {
-                    Note newNote = new Note(note);
+                    Note newNote = new Note(title, note);
                     newNote.id = noteId;
                     notesAdapter.getNotes().add(0, newNote);
                     currentNoteId = noteId;
@@ -166,9 +174,8 @@ public class NoteActivity extends AppCompatActivity {
                 getResources().getString(R.string.paragraph20)
         };
 
-
         for (String p : paragraphs) {
-            noteStorage.saveNote(p, -1, (n) -> {
+            noteStorage.saveNote(String.valueOf(Math.random()), p, -1, (n) -> {
                 runOnUiThread(() -> System.out.println("Saved"));
             });
         }

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.HashMap;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
@@ -33,26 +32,30 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View itemView = layoutInflater.inflate(R.layout.note_item, parent, false);
         return new NoteViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note currentNote = notes.get(position);
+        holder.noteTitleView.setText(currentNote.title);
         holder.noteTextView.setText(getPreviewText(currentNote.content));
-        holder.itemView.setOnClickListener(v -> viewNote(currentNote.content, currentNote.id, position));
+        holder.itemView.setOnClickListener(v -> viewNote(currentNote.title, currentNote.content, currentNote.id, position));
     }
 
-    private void viewNote(String noteContent, int noteId, int position) {
+    private void viewNote(String noteTitle, String noteContent, int noteId, int position) {
         Intent intent = new Intent(context, NoteActivity.class);
-        intent.putExtra("noteContent", noteContent)
+        intent.putExtra("noteTitle", noteTitle)
+                .putExtra("noteContent", noteContent)
                 .putExtra("noteId", noteId)
                 .putExtra("position", position);
         startActivity(context, intent, null);
     }
 
-    private String getPreviewText(String text) {
+    @NonNull
+    private String getPreviewText(@NonNull String text) {
         int lineCount = 0;
         int indexCount = 0;
         for (String x : text.split("")) {
@@ -81,10 +84,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     }
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
+        private final TextView noteTitleView;
         private final TextView noteTextView;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
+            noteTitleView = itemView.findViewById(R.id.noteTitleView);
             noteTextView = itemView.findViewById(R.id.noteTextView);
         }
     }

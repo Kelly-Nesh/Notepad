@@ -18,7 +18,7 @@ public class NoteStorage {
         this.noteDao = MainActivity.getNoteDatabase().noteDao();
     }
 
-    public boolean saveNote(String noteContent, final int noteId, SaveNoteCallback callback) {
+    public boolean saveNote(String noteTitle, String noteContent, final int noteId, SaveNoteCallback callback) {
         if (noteContent.isEmpty()) {
             Toast.makeText(context, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
             return false;
@@ -26,7 +26,7 @@ public class NoteStorage {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                Note note = new Note(noteContent);
+                Note note = new Note(noteTitle, noteContent);
                 if (noteId >= 0) {
                     note.id = noteId;
                     noteDao.update(note);

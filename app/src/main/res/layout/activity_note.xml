@@ -12,13 +12,26 @@
         app:popupTheme="?attr/popupMenuStyle" />
 
     <EditText
+        android:id="@+id/noteTitleText"
+        android:layout_width="match_parent"
+        style="@style/Widget.Notepad.EditText"
+        android:layout_height="60dp"
+        android:padding="16dp"
+        android:hint="Note title"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/noteEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <EditText
         android:id="@+id/noteEditText"
         style="@style/Widget.Notepad.EditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="top|start"
-        android:hint="Enter your note here"
+        android:hint="Note content"
         android:inputType="textMultiLine"
         android:maxLines="1000"
         android:padding="16dp"
@@ -26,6 +39,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/noteTitleText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
