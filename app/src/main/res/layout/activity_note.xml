@@ -35,6 +35,7 @@
         android:inputType="textMultiLine"
         android:maxLines="1000"
         android:padding="16dp"
+        android:paddingTop="4dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

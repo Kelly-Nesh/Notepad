@@ -69,8 +69,8 @@ public class NoteActivity extends AppCompatActivity {
         if (id == R.id.action_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, noteTitleText.getText().toString());
-            shareIntent.putExtra(Intent.EXTRA_TEXT, noteEditText.getText().toString());
+            String message = noteTitleText.getText().toString() + "\n\n" + noteEditText.getText().toString();
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message);
             startActivity(Intent.createChooser(shareIntent, "Share Note"));
         } else if (id == R.id.action_save) {
             saveNote();
@@ -106,6 +106,7 @@ public class NoteActivity extends AppCompatActivity {
                     notesAdapter.notifyItemInserted(0);
                     recyclerView.smoothScrollToPosition(0);
                 } else {
+                    notesAdapter.getNotes().get(currentNotePosition).title = title;
                     notesAdapter.getNotes().get(currentNotePosition).content = note;
                     notesAdapter.notifyItemChanged(currentNotePosition);
                 }
