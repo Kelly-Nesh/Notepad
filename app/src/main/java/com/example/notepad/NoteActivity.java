@@ -20,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteActivity extends AppCompatActivity {
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final int autoSaveInterval = 5000; // 5 seconds
     private EditText noteTitleText;
     private EditText noteEditText;
     private NoteStorage noteStorage;
@@ -28,15 +30,7 @@ public class NoteActivity extends AppCompatActivity {
     private int currentNotePosition = -1;
     private NotesAdapter notesAdapter;
     private RecyclerView recyclerView;
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private int autoSaveInterval = 5000; // 5 seconds
-
-    private Runnable autoSaveRunnable = new Runnable() {
-        @Override
-        public void run() {
-            saveNote();
-        }
-    };
+    private final Runnable autoSaveRunnable = this::saveNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +102,6 @@ public class NoteActivity extends AppCompatActivity {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         String message = noteEditText.getText().toString();
-        ;
         String title = noteTitleText.getText().toString();
         if (!title.isBlank()) {
             message = title + "\n\n" + message;
