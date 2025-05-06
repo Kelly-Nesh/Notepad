@@ -1,7 +1,6 @@
 package com.example.notepad;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -19,10 +18,6 @@ public class NoteStorage {
     }
 
     public boolean saveNote(String noteTitle, String noteContent, final int noteId, SaveNoteCallback callback) {
-        if (noteContent.isEmpty()) {
-            Toast.makeText(context, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -64,6 +59,7 @@ public class NoteStorage {
     public interface GetNoteListCallback {
         void onNoteListLoaded(List<Note> notes);
     }
+
     public interface SaveNoteCallback {
         void onNoteSaved(int noteId);
     }

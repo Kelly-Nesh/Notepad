@@ -26,7 +26,7 @@ public class NoteActivity extends AppCompatActivity {
     private EditText noteEditText;
     private NoteStorage noteStorage;
     private int currentNoteId = -1;
-    private boolean newNoteAdded = false; // Used when note is added and deleted without leaving activity
+    private boolean noteSaved = true; // Flag for checking if note is saved
     private int currentNotePosition = -1;
     private NotesAdapter notesAdapter;
     private RecyclerView recyclerView;
@@ -91,8 +91,8 @@ public class NoteActivity extends AppCompatActivity {
             deleteNote();
             return true;
         } else if (id == android.R.id.home) {
-            finish();
             saveNote();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -111,8 +111,15 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
+        if (noteSaved) {
+            return;
+        }
         String title = noteTitleText.getText().toString();
         String note = noteEditText.getText().toString();
+        if (note.isEmpty()) {
+            Toast.makeText(this, "Cannot save empty note!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         boolean saved = noteStorage.saveNote(title, note, currentNoteId, (noteId) -> {
             runOnUiThread(() -> {
@@ -121,7 +128,6 @@ public class NoteActivity extends AppCompatActivity {
                     newNote.id = noteId;
                     notesAdapter.getNotes().add(0, newNote);
                     currentNoteId = noteId;
-                    newNoteAdded = true;
                     notesAdapter.notifyItemInserted(0);
                     recyclerView.smoothScrollToPosition(0);
                 } else {
@@ -132,6 +138,7 @@ public class NoteActivity extends AppCompatActivity {
             });
         });
         if (saved) {
+            noteSaved = true;
             Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Note not saved!", Toast.LENGTH_SHORT).show();
@@ -162,6 +169,9 @@ public class NoteActivity extends AppCompatActivity {
         noteStorage.deleteNote(currentNoteId, () -> runOnUiThread(() -> {
             Toast.makeText(this, "Note deleted!", Toast.LENGTH_SHORT).show();
         }));
+        if (currentNotePosition < 0) {
+            return;
+        }
         notesAdapter.getNotes().remove(Math.max(currentNotePosition, 0));
         notesAdapter.notifyItemRemoved(currentNotePosition);
         notesAdapter.notifyItemRangeChanged(currentNotePosition, notesAdapter.getNotes().size() - currentNotePosition);
@@ -179,6 +189,7 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // Called before the text changes
+                noteSaved = false;
             }
 
             @Override
@@ -201,6 +212,9 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (!noteSaved) {
+            saveNote();
+        }
         handler.removeCallbacks(autoSaveRunnable);
     }
 
