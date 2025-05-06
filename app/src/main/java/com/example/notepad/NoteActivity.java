@@ -5,6 +5,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -24,11 +28,21 @@ public class NoteActivity extends AppCompatActivity {
     private int currentNotePosition = -1;
     private NotesAdapter notesAdapter;
     private RecyclerView recyclerView;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private int autoSaveInterval = 5000; // 5 seconds
+
+    private Runnable autoSaveRunnable = new Runnable() {
+        @Override
+        public void run() {
+            saveNote();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
 
         recyclerView = MainActivity.getNotesRecyclerView();
         notesAdapter = (NotesAdapter) recyclerView.getAdapter();
@@ -54,6 +68,7 @@ public class NoteActivity extends AppCompatActivity {
                 noteEditText.setText(noteContent);
             }
         }
+        startAutoSave();
     }
 
     @Override
@@ -83,6 +98,7 @@ public class NoteActivity extends AppCompatActivity {
             return true;
         } else if (id == android.R.id.home) {
             finish();
+            saveNote();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -97,7 +113,6 @@ public class NoteActivity extends AppCompatActivity {
         if (!title.isBlank()) {
             message = title + "\n\n" + message;
         }
-        System.out.println("---------------------------------------------\n\n\t" + title + "\n\n" + message);
         shareIntent.putExtra(Intent.EXTRA_TEXT, message);
         startActivity(Intent.createChooser(shareIntent, "Share Note"));
     }
@@ -159,6 +174,41 @@ public class NoteActivity extends AppCompatActivity {
         notesAdapter.notifyItemRangeChanged(currentNotePosition, notesAdapter.getNotes().size() - currentNotePosition);
 
         finish();
+    }
+
+    private void startAutoSave() {
+        setEditTextWatcher(noteTitleText);
+        setEditTextWatcher(noteEditText);
+    }
+
+    private void setEditTextWatcher(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Called before the text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Called as the text is changing
+                // 's' contains the text AFTER the change
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Called after the text has changed and filters applied
+                // 's' contains the final text
+                // When text changes, remove any pending autosave tasks
+                handler.removeCallbacks(autoSaveRunnable);
+                handler.postDelayed(autoSaveRunnable, autoSaveInterval);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(autoSaveRunnable);
     }
 
     /* Create testing notes */
